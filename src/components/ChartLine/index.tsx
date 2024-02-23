@@ -6,10 +6,10 @@ import StockTools from "highcharts/modules/stock-tools";
 import Exporting from "highcharts/modules/exporting";
 import ExportData from "highcharts/modules/export-data";
 import { useEffect } from "react";
+import { InvestmentData } from "@/interfaces";
 
-export default function ChartLine({ table }) {
-
-  const colors = ['#0077bd', '#28a745']
+export default function ChartLine({ table }: { table: InvestmentData[] }) {
+  const colors = ["#0077bd", "#28a745"];
 
   useEffect(() => {
     StockTools(Highcharts);
@@ -31,9 +31,9 @@ export default function ChartLine({ table }) {
     },
     legend: {
       enabled: true,
-      align: "center", // Align the legend items to the center
-      verticalAlign: "top", // Align the legend to the top
-      layout: "horizontal", // Display legend items horizontally
+      align: "center",
+      verticalAlign: "top",
+      layout: "horizontal",
       x: 0,
       y: 0,
     },
@@ -62,7 +62,7 @@ export default function ChartLine({ table }) {
     ],
     plotOptions: {
       column: {
-        borderRadius: 8, // Valor para controlar o arredondamento das barras
+        borderRadius: 8,
       },
     },
 
@@ -85,55 +85,58 @@ export default function ChartLine({ table }) {
           return item.totalInvestido;
         }),
         tooltip: {
-            pointFormatter: function () {
-              var point = this;
-              var item = table[point.index];
-          
-              // Definindo a variável de cor
-              
-          
-              // Formatação do número para o formato brasileiro
-              var totalInvestidoFormatted = item.totalInvestido.toLocaleString(
-                "pt-BR",
-                {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2,
-                }
-              );
-          
-              return (
-                '<span style="color: ' + colors[0] + '">\u25CF</span> Total Investido: ' +
-                totalInvestidoFormatted +
-                "<br/>"
-              );
-            },
+          pointFormatter: function (this: Highcharts.Point) {
+            let point = this;
+            let item = table[point.index] as InvestmentData;
+
+            let totalInvestidoFormatted: string =
+              item.totalInvestido.toLocaleString("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              });
+
+            return (
+              '<span style="color: ' +
+              colors[0] +
+              '">\u25CF</span> Total Investido: ' +
+              totalInvestidoFormatted +
+              "<br/>"
+            );
           },
-        color: colors[0]
+        },
+
+        color: colors[0],
       },
       {
         name: "Total Juros",
         data: table.map(function (item) {
           return item.totalAcumulado;
         }),
-        tooltip: {
-          pointFormatter: function () {
-            var point = this;
-            var item = table[point.index];
 
-            // Formatação do número para o formato brasileiro
-            var totalJurosFormatted = item.totalJuros.toLocaleString("pt-BR", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            });
+        tooltip: {
+          pointFormatter: function (this: Highcharts.Point) {
+            let point = this;
+            let item = table[point.index] as InvestmentData;
+
+            let totalJurosFormatted: string = item.totalJuros.toLocaleString(
+              "pt-BR",
+              {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }
+            );
 
             return (
-                '<span style="color: ' + colors[1] + '">\u25CF</span> Total Juros: ' +
+              '<span style="color: ' +
+              colors[1] +
+              '">\u25CF</span> Total Juros: ' +
               totalJurosFormatted +
               "<br/>"
             );
           },
         },
-        color: colors[1]
+
+        color: colors[1],
       },
     ],
 

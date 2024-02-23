@@ -1,37 +1,31 @@
 import React from "react";
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
-
-interface CardMoneyProps {
-  resultadoValorTotalFinal: Record<number, { [key: string]: any }>;
-  info: string;
-  title: string;
-}
+import { CardMoneyProps } from "@/interfaces";
 
 export default function CardMoney({
-  resultadoValorTotalFinal,
+  finalTotalValueResult,
   info,
   title
 }: CardMoneyProps) {
-  const numberOfEntries = Object.keys(resultadoValorTotalFinal).length;
+  const numberOfEntries = Object.keys(finalTotalValueResult).length;
 
-  const totalValue = resultadoValorTotalFinal[numberOfEntries - 1][
+  const totalValue = finalTotalValueResult[numberOfEntries - 1][
     info
   ].toLocaleString("pt-BR", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 
-  console.log(resultadoValorTotalFinal)
-
   return (
       
-    <Box bg="white" height={"auto"} borderRadius={"lg"} p={5} borderWidth={'1px'}>
-      <Flex justify={"center"}>
+    <Box bg="white" height={"auto"} borderRadius={"lg"} p={5} borderWidth={'1px'} w={'100%'}>
+      <Flex justify={"center"} w={'100%'}>
 
         <Text fontSize="md">{title}</Text>
       </Flex>
-        <Flex justify={"center"}>
-          <Heading fontWeight={'500'} fontSize={"3xl"} 
+        <Flex justify={"center"} w={'100%'}>
+          <Heading fontWeight={'500'} fontSize={"3xl"} w={'100%'}
+          textAlign={"center"}
           >R${totalValue}</Heading>
         </Flex>
     </Box>

@@ -1,3 +1,4 @@
+import { InvestmentData } from "@/interfaces";
 import {
   Table,
   Thead,
@@ -8,17 +9,7 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
-interface TableItem {
-  mes: number;
-  juros: number;
-  aporte: number;
-  totalInvestido: number;
-  totalJuros: number;
-  totalAcumulado: number;
-}
-
-export default function TableValues({ data }: { data: TableItem[] }) {
- 
+export default function TableValues({ data }: { data: InvestmentData[] }) {
   if (!data || data.length === 0) {
     return <p>Nenhum dado disponível.</p>;
   }
@@ -42,13 +33,13 @@ export default function TableValues({ data }: { data: TableItem[] }) {
               {columns.map((column) => (
                 <Td key={column}>
                   {column === "mes"
-                    ? item[column as keyof TableItem]
+                    ? item[column as keyof InvestmentData]
                     : new Intl.NumberFormat("pt-BR", {
                         style: "currency",
                         currency: "BRL",
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
-                      }).format(item[column as keyof TableItem])}
+                      }).format(item[column as keyof InvestmentData])}
                 </Td>
               ))}
             </Tr>

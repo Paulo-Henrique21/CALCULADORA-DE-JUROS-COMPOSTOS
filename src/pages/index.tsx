@@ -1,41 +1,18 @@
-import {
-  Box,
-  Card,
-  CardBody,
-  CardHeader,
-  Flex,
-  Heading,
-  IconButton,
-  SimpleGrid,
-  Stack,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from "@chakra-ui/react";
+import { Box, Divider, Flex, SimpleGrid } from "@chakra-ui/react";
 import { useState } from "react";
-import { valorTotalFinal } from "@/utils/calculos";
-import { GiPayMoney, GiReceiveMoney, GiTakeMyMoney } from "react-icons/gi";
+import { valorTotalFinal } from "@/utils/calcs";
 import ChartLine from "@/components/ChartLine";
 import TabsContent from "@/components/TabsContent";
 import CardMoney from "@/components/Card";
 import CalculatorForm from "@/components/CalculatorForm";
-import { FormValues } from "@/interfaces";
+import { FormValues, InvestmentData } from "@/interfaces";
 import TableValues from "@/components/TableValues";
-import { PiFileText, PiFileTextBold } from "react-icons/pi";
-
-interface TableItem {
-  mes: number;
-  juros: number;
-  aporte: number;
-  totalInvestido: number;
-  totalJuros: number;
-  totalAcumulado: number;
-}
 
 export default function App() {
-  const [resultadoValorTotalFinal, setResultadoValorTotalFinal] = useState({});
+  const [finalTotalValueResult, setFinalTotalValueResult] = useState<
+    InvestmentData[]
+  >([]);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChart = async (
@@ -55,16 +32,17 @@ export default function App() {
       valorInicial.replace(/[\s.]/g, "").replace(",", ".")
     );
 
-    setResultadoValorTotalFinal(
-      await valorTotalFinal({
-        periodo: periodoTratado,
-        taxaJuros: taxaJurosTratada,
-        valorInicial: valorInicialTratado,
-        valorMensal: valorMensalTratado,
-        taxaJurosAnoMes,
-        periodoAnoMes,
-      })
-    );
+    const response = await valorTotalFinal({
+      periodo: periodoTratado,
+      taxaJuros: taxaJurosTratada,
+      valorInicial: valorInicialTratado,
+      valorMensal: valorMensalTratado,
+      taxaJurosAnoMes,
+      periodoAnoMes,
+    });
+    console.log(response);
+
+    setFinalTotalValueResult(response);
   };
 
   const onSubmit = async (values: FormValues) => {
@@ -85,9 +63,9 @@ export default function App() {
     } = values;
     handleChart(
       periodo,
-      taxaJuros,
-      valorInicial,
-      valorMensal,
+      taxaJuros.toString(),
+      valorInicial.toString(),
+      valorMensal.toString(),
       periodoAnoMes,
       taxaJurosAnoMes
     );
@@ -100,113 +78,33 @@ export default function App() {
     { name: "totalAcumulado", title: "Total Acumulado" },
   ];
 
-  console.log(resultadoValorTotalFinal);
-
   return (
-    <Flex
-      direction={"column"}
-      align={"center"}
-      p={10}
-      bg={"gray.50"}
-      minH={"100vh"}
-    >
+    <Flex direction={"column"} align={"center"} p={10} minH={"100vh"}>
       <CalculatorForm onSubmit={onSubmit} isSubmitting={isSubmitting} />
 
-      {Object.keys(resultadoValorTotalFinal).length > 0 && (
+      {Object.keys(finalTotalValueResult).length > 0 && (
         <>
-          <Box w={"100%"} maxW={"5xl"} mt={5}>
-            <Card>
-              <CardHeader pb={2}>
-                <Stack direction={"row"} alignItems={"center"}>
-                  <IconButton
-                    isRound={true}
-                    aria-label="Done"
-                    fontSize="20px"
-                    icon={<PiFileTextBold />}
-                  />
-                  <Heading fontSize={"xl"}>RESULTADO</Heading>
-                </Stack>
-              </CardHeader>
-              <CardBody px={10} pb={10}>
-                <SimpleGrid
-                  columns={{ base: 1, md: 3 }}
-                  spacing={{ base: 5, lg: 4 }}
-                >
-                  {listInfo.map((item, index) => (
-                    <CardMoney
-                      key={index}
-                      resultadoValorTotalFinal={resultadoValorTotalFinal}
-                      info={item.name}
-                      title={item.title}
-                    />
-                  ))}
-                </SimpleGrid>
-              </CardBody>
-            </Card>
-            <Card mt={5} p={0}>
-              <CardBody px={1} py={3}>
-                <TabsContent
-                  contentChart={<ChartLine table={resultadoValorTotalFinal} />}
-                  contentTable={
-                    <TableValues
-                      data={resultadoValorTotalFinal as TableItem[]}
-                    />
-                  }
-                />
-              </CardBody>
-            </Card>
-
-            {/* <ChartLine table={resultadoValorTotalFinal} />
-            <TableValues data={resultadoValorTotalFinal as TableItem[]} /> */}
-            {/*
+          <Box w={"100%"} maxW={"5xl"}>
+            <Divider my={4} />
             <SimpleGrid
-              mt={7}
-              columns={{ base: 1, md: 1 }}
-              spacing={{ base: 5, lg: 4 }}
+              columns={{ base: 1, md: 3 }}
+              spacing={{ base: 4, lg: 3 }}
             >
-              <Box bg="white" minHeight={"40rem"} borderRadius={"lg"}>
-                 <Tabs
-                  size="md"
-                  isFitted
-                  h={"100%"}
-                  display={"flex"}
-                  flexDirection={"column"}
-                >
-                  <TabList fontSize={"lg"}>
-                    <Tab
-                    // _selected={{
-                    //   color: "white",
-                    //   bg: "purple.500",
-                    //   borderTopLeftRadius: "md",
-                    // }}
-                    >
-                      Gráfico
-                    </Tab>
-                    <Tab
-                    // _selected={{
-                    //   color: "white",
-                    //   bg: "purple.500",
-                    //   borderTopRightRadius: "md",
-                    // }}
-                    >
-                      Tabela
-                    </Tab>
-                  </TabList>
-
-                  <TabPanels h={"full"}>
-                    <TabPanel h={"full"}>
-                      <ChartLine table={resultadoValorTotalFinal} />
-                    </TabPanel>
-                    <TabPanel h={"full"} overflowY={"auto"} maxH={"587px"}>
-                      <TableValues
-                        data={resultadoValorTotalFinal as TableItem[]}
-                      />
-                    </TabPanel>
-                  </TabPanels>
-                </Tabs> 
-              </Box>
+              {listInfo.map((item, index) => (
+                <CardMoney
+                  key={index}
+                  finalTotalValueResult={finalTotalValueResult}
+                  info={item.name}
+                  title={item.title}
+                />
+              ))}
             </SimpleGrid>
-              */}
+            <Box borderWidth={"1px"} borderRadius={"md"} mt={4} p={5}>
+              <TabsContent
+                contentChart={<ChartLine table={finalTotalValueResult} />}
+                contentTable={<TableValues data={finalTotalValueResult} />}
+              />
+            </Box>
           </Box>
         </>
       )}
