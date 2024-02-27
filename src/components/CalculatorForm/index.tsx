@@ -9,6 +9,7 @@ import {
   FormHelperText,
   FormLabel,
   Heading,
+  IconButton,
   Input,
   InputGroup,
   InputLeftAddon,
@@ -20,8 +21,10 @@ import {
   Select,
   Stack,
   VStack,
+  useColorMode,
 } from "@chakra-ui/react";
 import { CalculatorFormProps } from "@/interfaces";
+import { GoSun, GoMoon } from "react-icons/go";
 
 const CalculatorForm: React.FC<CalculatorFormProps> = ({
   onSubmit,
@@ -38,6 +41,7 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
     },
     onSubmit: onSubmit,
   });
+  const { colorMode, toggleColorMode } = useColorMode();
 
   const formatMoney = (inputValue: string) => {
     const numericValue = inputValue.replace(/[^0-9]/g, "");
@@ -66,7 +70,16 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
   return (
     <Box w={"100%"} maxW={"5xl"}>
       <form onSubmit={formik.handleSubmit}>
-        <Heading size={"lg"}>Calculadora de juros compostos</Heading>
+        <Flex w={"100%"} justifyContent={"space-between"}>
+          <Heading size={"lg"}>Calculadora de juros compostos</Heading>
+          <IconButton
+            size={"sm"}
+            onClick={toggleColorMode}
+            aria-label="Search database"
+            icon={colorMode === "dark" ? <GoSun /> : <GoMoon />}
+          />
+        </Flex>
+
         <Divider my={4} />
         <Box borderWidth={"1px"} borderRadius={"md"} p={5}>
           <VStack spacing={2}>

@@ -12,8 +12,13 @@ export default function App() {
   const [finalTotalValueResult, setFinalTotalValueResult] = useState<
     InvestmentData[]
   >([]);
-
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const listInfo = [
+    { name: "totalInterest", title: "Total Juros" },
+    { name: "totalInvested", title: "Total Investido" },
+    { name: "totalAccumulated", title: "Total Acumulado" },
+  ];
 
   const handleChart = async (
     period: number,
@@ -70,12 +75,6 @@ export default function App() {
     );
     setIsSubmitting(false);
   };
-
-  const listInfo = [
-    { name: "totalInterest", title: "Total Juros" },
-    { name: "totalInvested", title: "Total Investido" },
-    { name: "totalAccumulated", title: "Total Acumulado" },
-  ];
 
   return (
     <Flex direction={"column"} align={"center"} p={10} minH={"100vh"}>
