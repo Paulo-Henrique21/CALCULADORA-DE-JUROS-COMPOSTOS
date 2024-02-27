@@ -29,12 +29,12 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
 }) => {
   const formik = useFormik({
     initialValues: {
-      valorInicial: "",
-      valorMensal: "",
-      taxaJuros: "6,5",
-      taxaJurosAnoMes: "Anual",
-      periodo: 1,
-      periodoAnoMes: "Ano(s)",
+      initialValue: "",
+      monthlyValue: "",
+      interestRate: "6,5",
+      interestRateYearMonth: "Anual",
+      period: 1,
+      periodYearMonth: "Ano(s)",
     },
     onSubmit: onSubmit,
   });
@@ -81,37 +81,37 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
               }}
             >
               <FormControl>
-                <FormLabel htmlFor="valorInicial" fontSize={"sm"}>
+                <FormLabel htmlFor="initialValue" fontSize={"sm"}>
                   Valor inicial:
                 </FormLabel>
                 <InputGroup size={"sm"}>
                   <InputLeftAddon children="R$" />
                   <Input
-                    id="valorInicial"
-                    name="valorInicial"
+                    id="initialValue"
+                    name="initialValue"
                     type="text"
                     onChange={(e) =>
-                      handleValueChange("valorInicial", e.target.value)
+                      handleValueChange("initialValue", e.target.value)
                     }
-                    value={formik.values.valorInicial}
+                    value={formik.values.initialValue}
                     placeholder="0,00"
                   />
                 </InputGroup>
               </FormControl>
               <FormControl>
-                <FormLabel htmlFor="valorMensal" fontSize={"sm"}>
+                <FormLabel htmlFor="monthlyValue" fontSize={"sm"}>
                   Valor mensal:
                 </FormLabel>
                 <InputGroup size={"sm"}>
                   <InputLeftAddon children="R$" />
                   <Input
-                    id="valorMensal"
-                    name="valorMensal"
+                    id="monthlyValue"
+                    name="monthlyValue"
                     type="text"
                     onChange={(e) =>
-                      handleValueChange("valorMensal", e.target.value)
+                      handleValueChange("monthlyValue", e.target.value)
                     }
-                    value={formik.values.valorMensal}
+                    value={formik.values.monthlyValue}
                     placeholder="0,00"
                   />
                 </InputGroup>
@@ -138,7 +138,7 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
               <Stack direction={"row"} w={"full"}>
                 <FormControl isRequired>
                   <FormLabel
-                    htmlFor="taxaJuros"
+                    htmlFor="interestRate"
                     fontSize={"sm"}
                     whiteSpace={"nowrap"}
                   >
@@ -147,8 +147,8 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
                   <InputGroup size={"sm"}>
                     <InputLeftAddon children="%" />
                     <Input
-                      id="taxaJuros"
-                      name="taxaJuros"
+                      id="interestRate"
+                      name="interestRate"
                       type="text"
                       onChange={(e) => {
                         const formattedValue = e.target.value
@@ -159,17 +159,17 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
 
                         formik.handleChange({
                           target: {
-                            name: "taxaJuros",
+                            name: "interestRate",
                             value: formattedValue,
                           },
                         });
                       }}
-                      value={formik.values.taxaJuros}
+                      value={formik.values.interestRate}
                       placeholder="0,00"
                     />
                   </InputGroup>
-                  {(formik.values.taxaJuros === "0" ||
-                    formik.values.taxaJuros === "0,") && (
+                  {(formik.values.interestRate === "0" ||
+                    formik.values.interestRate === "0,") && (
                     <FormHelperText color={"red.500"}>
                       Valor deve ser maior que zero
                     </FormHelperText>
@@ -179,10 +179,10 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
                   <Select
                     size={"sm"}
                     w={"110px"}
-                    id="taxaJurosAnoMes"
-                    name="taxaJurosAnoMes"
+                    id="interestRateYearMonth"
+                    name="interestRateYearMonth"
                     onChange={formik.handleChange}
-                    value={formik.values.taxaJurosAnoMes}
+                    value={formik.values.interestRateYearMonth}
                   >
                     <option value="Mensal">Mensal</option>
                     <option value="Anual">Anual</option>
@@ -191,17 +191,17 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
               </Stack>
               <Stack direction={"row"} w={"full"}>
                 <FormControl>
-                  <FormLabel htmlFor="periodo" fontSize={"sm"}>
+                  <FormLabel htmlFor="period" fontSize={"sm"}>
                     Período:
                   </FormLabel>
                   <NumberInput
                     size={"sm"}
-                    id="periodo"
-                    name="periodo"
+                    id="period"
+                    name="period"
                     onChange={(valueString) =>
                       formik.handleChange({
                         target: {
-                          name: "periodo",
+                          name: "period",
                           value: Math.max(
                             1,
                             valueString !== "" ? parseInt(valueString) : 1
@@ -209,7 +209,7 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
                         },
                       })
                     }
-                    value={formik.values.periodo}
+                    value={formik.values.period}
                     min={1}
                     max={1500}
                   >
@@ -224,10 +224,10 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
                   <Select
                     size={"sm"}
                     w={"110px"}
-                    id="periodoAnoMes"
-                    name="periodoAnoMes"
+                    id="periodYearMonth"
+                    name="periodYearMonth"
                     onChange={formik.handleChange}
-                    value={formik.values.periodoAnoMes}
+                    value={formik.values.periodYearMonth}
                   >
                     <option value="Ano(s)">Ano(s)</option>
                     <option value="Mes(es)">Mes(es)</option>
@@ -247,12 +247,12 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
               onClick={() => {
                 formik.resetForm({
                   values: {
-                    valorInicial: "",
-                    valorMensal: "",
-                    taxaJuros: "",
-                    taxaJurosAnoMes: "Anual",
-                    periodo: 1,
-                    periodoAnoMes: "Ano(s)",
+                    initialValue: "",
+                    monthlyValue: "",
+                    interestRate: "",
+                    interestRateYearMonth: "Anual",
+                    period: 1,
+                    periodYearMonth: "Ano(s)",
                   },
                 });
               }}

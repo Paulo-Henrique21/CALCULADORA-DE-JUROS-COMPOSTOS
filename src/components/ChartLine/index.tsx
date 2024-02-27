@@ -82,7 +82,7 @@ export default function ChartLine({ table }: { table: InvestmentData[] }) {
       {
         name: "Total Investido",
         data: table.map(function (item) {
-          return item.totalInvestido;
+          return item.totalInvested;
         }),
         tooltip: {
           pointFormatter: function (this: Highcharts.Point) {
@@ -90,7 +90,7 @@ export default function ChartLine({ table }: { table: InvestmentData[] }) {
             let item = table[point.index] as InvestmentData;
 
             let totalInvestidoFormatted: string =
-              item.totalInvestido.toLocaleString("pt-BR", {
+              item.totalInvested.toLocaleString("pt-BR", {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2,
               });
@@ -110,7 +110,7 @@ export default function ChartLine({ table }: { table: InvestmentData[] }) {
       {
         name: "Total Juros",
         data: table.map(function (item) {
-          return item.totalAcumulado;
+          return item.totalAccumulated;
         }),
 
         tooltip: {
@@ -118,7 +118,7 @@ export default function ChartLine({ table }: { table: InvestmentData[] }) {
             let point = this;
             let item = table[point.index] as InvestmentData;
 
-            let totalJurosFormatted: string = item.totalJuros.toLocaleString(
+            let totalJurosFormatted: string = item.totalInterest.toLocaleString(
               "pt-BR",
               {
                 minimumFractionDigits: 2,

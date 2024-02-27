@@ -16,37 +16,36 @@ export default function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChart = async (
-    periodo: number,
-    taxaJuros: string,
-    valorInicial: string,
-    valorMensal: string,
-    periodoAnoMes: string,
-    taxaJurosAnoMes: string
+    period: number,
+    interestRate: string,
+    initialValue: string,
+    monthlyValue: string,
+    periodYearMonth: string,
+    interestRateYearMonth: string
   ) => {
-    const periodoTratado = Number(periodo);
-    const taxaJurosTratada = Number(taxaJuros.replace(",", "."));
+    const treatedPeriod = Number(period);
+    const TreatedInterestRate = Number(interestRate.replace(",", "."));
     const valorMensalTratado = Number(
-      valorMensal.replace(/[\s.]/g, "").replace(",", ".")
+      monthlyValue.replace(/[\s.]/g, "").replace(",", ".")
     );
     const valorInicialTratado = Number(
-      valorInicial.replace(/[\s.]/g, "").replace(",", ".")
+      initialValue.replace(/[\s.]/g, "").replace(",", ".")
     );
 
     const response = await valorTotalFinal({
-      periodo: periodoTratado,
-      taxaJuros: taxaJurosTratada,
-      valorInicial: valorInicialTratado,
-      valorMensal: valorMensalTratado,
-      taxaJurosAnoMes,
-      periodoAnoMes,
+      period: treatedPeriod,
+      interestRate: TreatedInterestRate,
+      initialValue: valorInicialTratado,
+      monthlyValue: valorMensalTratado,
+      interestRateYearMonth,
+      periodYearMonth,
     });
-    console.log(response);
 
     setFinalTotalValueResult(response);
   };
 
   const onSubmit = async (values: FormValues) => {
-    if (values.taxaJuros === "0" || values.taxaJuros === "0,") {
+    if (values.interestRate === "0" || values.interestRate === "0,") {
       console.error("Interest rate must be greater than zero");
       return;
     }
@@ -54,28 +53,28 @@ export default function App() {
     setIsSubmitting(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     const {
-      periodo,
-      taxaJuros,
-      valorInicial,
-      valorMensal,
-      periodoAnoMes,
-      taxaJurosAnoMes,
+      period,
+      interestRate,
+      initialValue,
+      monthlyValue,
+      periodYearMonth,
+      interestRateYearMonth,
     } = values;
     handleChart(
-      periodo,
-      taxaJuros.toString(),
-      valorInicial.toString(),
-      valorMensal.toString(),
-      periodoAnoMes,
-      taxaJurosAnoMes
+      period,
+      interestRate.toString(),
+      initialValue.toString(),
+      monthlyValue.toString(),
+      periodYearMonth,
+      interestRateYearMonth
     );
     setIsSubmitting(false);
   };
 
   const listInfo = [
-    { name: "totalJuros", title: "Total Juros" },
-    { name: "totalInvestido", title: "Total Investido" },
-    { name: "totalAcumulado", title: "Total Acumulado" },
+    { name: "totalInterest", title: "Total Juros" },
+    { name: "totalInvested", title: "Total Investido" },
+    { name: "totalAccumulated", title: "Total Acumulado" },
   ];
 
   return (

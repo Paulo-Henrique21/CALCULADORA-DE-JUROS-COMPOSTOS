@@ -1,18 +1,19 @@
 export interface FormValues {
-  periodo: number;
-  taxaJuros: number | string;
-  valorInicial: number | string;
-  valorMensal: number | string;
-  periodoAnoMes: string;
-  taxaJurosAnoMes: string;
+  period: number;
+  interestRate: number | string;
+  initialValue: number | string;
+  monthlyValue: number | string;
+  periodYearMonth: string;
+  interestRateYearMonth: string;
 }
+
 export interface Calc {
-  periodo: number;
-  taxaJuros: number;
-  valorInicial: number;
-  valorMensal: number;
-  periodoAnoMes: string;
-  taxaJurosAnoMes: string;
+  period: number;
+  interestRate: number;
+  initialValue: number;
+  monthlyValue: number;
+  periodYearMonth: string;
+  interestRateYearMonth: string;
 }
 
 export interface CalculatorFormProps {
@@ -21,12 +22,12 @@ export interface CalculatorFormProps {
 }
 
 export interface InvestmentData {
-  mes: number;
-  juros: number;
-  aporte: number;
-  totalInvestido: number;
-  totalJuros: number;
-  totalAcumulado: number;
+  month: number;
+  fees: number;
+  contribution: number;
+  totalInvested: number;
+  totalInterest: number;
+  totalAccumulated: number;
 }
 
 export interface CardMoneyProps {

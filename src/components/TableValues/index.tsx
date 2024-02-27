@@ -32,7 +32,7 @@ export default function TableValues({ data }: { data: InvestmentData[] }) {
             <Tr key={index}>
               {columns.map((column) => (
                 <Td key={column}>
-                  {column === "mes"
+                  {column === "month"
                     ? item[column as keyof InvestmentData]
                     : new Intl.NumberFormat("pt-BR", {
                         style: "currency",
