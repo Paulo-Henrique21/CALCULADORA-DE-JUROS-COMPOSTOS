@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import _ from "lodash";
 import Highcharts from "highcharts/highstock";
 import HighchartsReact from "highcharts-react-official";
@@ -11,6 +11,9 @@ import { InvestmentData } from "@/interfaces";
 export default function ChartLine({ table }: { table: InvestmentData[] }) {
   const colors = ["#0077bd", "#28a745"];
 
+  const textColor = useColorModeValue("#000", "#fff");
+  const textColorHover = useColorModeValue("#00000077", "#ffffff9d");
+
   useEffect(() => {
     StockTools(Highcharts);
     Exporting(Highcharts);
@@ -20,7 +23,7 @@ export default function ChartLine({ table }: { table: InvestmentData[] }) {
   const options = {
     chart: {
       type: "spline",
-      backgroundColor: "#fff",
+      backgroundColor: "transparent",
       zoomType: "x",
       scrollablePlotArea: {
         minWidth: 1,
@@ -36,6 +39,12 @@ export default function ChartLine({ table }: { table: InvestmentData[] }) {
       layout: "horizontal",
       x: 0,
       y: 0,
+      itemStyle: {
+        color: textColor, // Cor dos nomes das séries
+      },
+      itemHoverStyle: {
+        color: textColorHover, // Cor dos nomes das séries durante o hover
+      },
     },
     credits: {
       enabled: false,
@@ -49,15 +58,31 @@ export default function ChartLine({ table }: { table: InvestmentData[] }) {
       tickWidth: 0,
       title: {
         text: "Meses",
+        style: {
+          color: textColor, // Cor do título do eixo X
+        },
+      },
+      labels: {
+        style: {
+          color: textColor, // Cor dos valores do eixo X
+        },
       },
     },
     yAxis: [
       {
         title: {
           text: "Investimento (R$)",
+          style: {
+            color: textColor, // Cor do título do eixo X
+          },
         },
         lineWidth: 0,
         gridLineWidth: 0,
+        labels: {
+          style: {
+            color: textColor, // Cor dos valores do eixo X
+          },
+        },
       },
     ],
     plotOptions: {

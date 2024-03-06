@@ -18,7 +18,7 @@ export default function CardMoney({
 
   return (
       
-    <Box bg="white" height={"auto"} borderRadius={"lg"} p={5} borderWidth={'1px'} w={'100%'}>
+    <Box height={"auto"} borderRadius={"lg"} p={5} borderWidth={'1px'} w={'100%'}>
       <Flex justify={"center"} w={'100%'}>
 
         <Text fontSize="md">{title}</Text>
