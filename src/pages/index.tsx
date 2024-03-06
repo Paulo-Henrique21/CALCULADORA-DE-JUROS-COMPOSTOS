@@ -77,7 +77,12 @@ export default function App() {
   };
 
   return (
-    <Flex direction={"column"} align={"center"} p={10} minH={"100vh"}>
+    <Flex
+      direction={"column"}
+      align={"center"}
+      p={10}
+      minH={"100vh"}
+    >
       <CalculatorForm onSubmit={onSubmit} isSubmitting={isSubmitting} />
 
       {Object.keys(finalTotalValueResult).length > 0 && (

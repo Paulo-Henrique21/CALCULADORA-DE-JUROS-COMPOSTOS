@@ -86,6 +86,7 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
             <Stack
               w={"full"}
               direction={{
+                base: "column",
                 sm: "column",
                 md: "row",
                 lg: "row",
@@ -133,22 +134,15 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
             <Stack
               w={"full"}
               direction={{
+                base: "column",
                 sm: "column",
                 md: "row",
                 lg: "row",
                 xl: "row",
                 "2xl": "row",
               }}
-              // bg={{
-              //   base: "green",
-              //   sm: "red",
-              //   md: "blue",
-              //   lg: "pink",
-              //   xl: "purple",
-              //   "2xl": "black",
-              // }}
             >
-              <Stack direction={"row"} w={"full"}>
+              <Stack direction={{ base: "column", sm: "row" }} w={"full"}>
                 <FormControl isRequired>
                   <FormLabel
                     htmlFor="interestRate"
@@ -191,7 +185,7 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
                 <Flex align={"end"}>
                   <Select
                     size={"sm"}
-                    w={"110px"}
+                    w={{ base: "100%", sm: "110px" }}
                     id="interestRateYearMonth"
                     name="interestRateYearMonth"
                     onChange={formik.handleChange}
@@ -202,7 +196,7 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
                   </Select>
                 </Flex>
               </Stack>
-              <Stack direction={"row"} w={"full"}>
+              <Stack direction={{ base: "column", sm: "row" }} w={"full"}>
                 <FormControl>
                   <FormLabel htmlFor="period" fontSize={"sm"}>
                     Período:
@@ -236,7 +230,7 @@ const CalculatorForm: React.FC<CalculatorFormProps> = ({
                 <Flex align={"end"}>
                   <Select
                     size={"sm"}
-                    w={"110px"}
+                    w={{ base: "100%", sm: "110px" }}
                     id="periodYearMonth"
                     name="periodYearMonth"
                     onChange={formik.handleChange}

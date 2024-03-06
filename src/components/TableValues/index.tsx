@@ -14,7 +14,6 @@ export default function TableValues({ data }: { data: InvestmentData[] }) {
     return <p>Nenhum dado disponível.</p>;
   }
 
-  // Obtém as chaves da primeira entrada para criar dinamicamente as colunas
   const columns = Object.keys(data[0]);
 
   return (

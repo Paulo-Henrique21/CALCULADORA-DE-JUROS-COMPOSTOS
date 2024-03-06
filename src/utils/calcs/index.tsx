@@ -32,7 +32,7 @@ const valorTotalFinal = async ({
       const fees = totalAccumulated * monthlyInterestRate;
       totalInterestAccumulated += fees;
 
-      totalAccumulated += fees + monthlyValue; // Adiciona também o contribution mensal
+      totalAccumulated += fees + monthlyValue;
 
       table.push({
         month: month,
