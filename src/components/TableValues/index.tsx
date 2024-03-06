@@ -20,8 +20,8 @@ export default function TableValues({ data }: { data: InvestmentData[] }) {
 
   const columnNames: ColumnNames = {
     month: "mês",
-    fees: "taxas",
-    contribution: "contribuição",
+    fees: "juros",
+    contribution: "valor mensal",
     totalInvested: "total investido",
     totalInterest: "juros totais",
     totalAccumulated: "total acumulado",
