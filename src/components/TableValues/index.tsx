@@ -9,12 +9,25 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 
+interface ColumnNames {
+  [key: string]: string;
+}
+
 export default function TableValues({ data }: { data: InvestmentData[] }) {
   if (!data || data.length === 0) {
     return <p>Nenhum dado disponível.</p>;
   }
 
-  const columns = Object.keys(data[0]);
+  const columnNames: ColumnNames = {
+    month: "mês",
+    fees: "taxas",
+    contribution: "contribuição",
+    totalInvested: "total investido",
+    totalInterest: "juros totais",
+    totalAccumulated: "total acumulado",
+  };
+
+  const columns = Object.keys(data[0]).map((column) => columnNames[column]);
 
   return (
     <TableContainer>
@@ -29,16 +42,16 @@ export default function TableValues({ data }: { data: InvestmentData[] }) {
         <Tbody>
           {data.map((item, index) => (
             <Tr key={index}>
-              {columns.map((column) => (
-                <Td key={column}>
-                  {column === "month"
-                    ? item[column as keyof InvestmentData]
+              {Object.keys(item).map((key) => (
+                <Td key={key}>
+                  {key === "month"
+                    ? item[key as keyof InvestmentData]
                     : new Intl.NumberFormat("pt-BR", {
                         style: "currency",
                         currency: "BRL",
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
-                      }).format(item[column as keyof InvestmentData])}
+                      }).format(item[key as keyof InvestmentData])}
                 </Td>
               ))}
             </Tr>
